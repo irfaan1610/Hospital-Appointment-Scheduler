@@ -62,20 +62,16 @@ Slotify Health is a fully responsive appointment scheduling web application that
 slotify-health/
 │── index.html
 │
-├── css/
-│ └── styles.css
+├── styles.css
 │
-├── js/
-│ └── script.js
+├── script.js
 │
 ├── assets/
 │ ├── images/
 │ │ └── logo.png
-│ │
-│ └── favicon/
-│ ├── favicon.ico
-│ ├── favicon-16x16.png
-│ └── favicon-32x32.png
+│ │ └── favicon.ico
+│ │ └──favicon-16x16.png
+│ │ └──favicon-32x32.png
 ```
 
 ---
