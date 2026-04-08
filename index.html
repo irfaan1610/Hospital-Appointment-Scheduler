@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CapMinds – Appointment Scheduler</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">
+    
+    <div class="logo-diamond">
+      <img src="assets/images/CapmindsLogo.png" alt="Capminds Logo" class="logo-img">
+    </div>
+
+    <span>CAPMINDS</span>
+  </a>
+
+  <button class="btn-book" id="btnBook">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+    <span>Book Appointment</span>
+  </button>
+</header>
+
+<!-- ═══ BODY ═══ -->
+<div class="app-body">
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">
+      <svg id="toggleIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <div class="nav-item active" data-page="calendar" id="navCalendar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <span class="nav-label">Calendar</span>
+    </div>
+    <div class="nav-item" data-page="dashboard" id="navDashboard">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+      </svg>
+      <span class="nav-label">Dashboard</span>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main id="mainContent">
+
+    <!-- Calendar Page -->
+    <div class="page active" id="pageCalendar">
+      <div class="calendar-card">
+        <div class="cal-toolbar">
+          <button class="cal-nav-btn" id="prevMonth">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="cal-date-display">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span id="calMonthLabel"></span>
+          </div>
+          <button class="cal-nav-btn" id="nextMonth">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="cal-today-btn" id="todayBtn">Today</button>
+          <select class="cal-view-select" id="viewSelect">
+            <option>Month</option>
+          </select>
+        </div>
+        <div class="cal-user-label" id="calUserLabel">All Appointments</div>
+        <div class="cal-grid" id="calDayHeaders"></div>
+        <div class="cal-grid" id="calBody"></div>
+      </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div class="page" id="pageDashboard">
+      <div class="dash-card">
+        <h1 class="dash-title">Practice Dashboard</h1>
+        <div class="dash-filters">
+          <div class="filter-wrap">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchPatient" placeholder="Patient Search">
+          </div>
+          <div class="filter-wrap">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchDoctor" placeholder="Doctor Search">
+          </div>
+          <div class="date-range-wrap">
+            <div class="filter-wrap">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <input type="date" id="filterFrom" class="date-range">
+            </div>
+            <span class="date-sep">—</span>
+            <div class="filter-wrap">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <input type="date" id="filterTo" class="date-range">
+            </div>
+          </div>
+          <button class="btn-update" id="btnUpdate">Update</button>
+        </div>
+        <div class="appt-table-wrap">
+          <table class="appt-table">
+            <thead>
+              <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Hospital</th>
+                <th>Specialty</th>
+                <th>Select Date</th>
+                <th>Select Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="apptTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══ MODAL ═══ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-header">
+      <h2 id="modalTitle">Schedule Appointment</h2>
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="apptForm" novalidate>
+        <div class="form-grid">
+
+          <!-- Patient -->
+          <div class="form-field" id="fPatient">
+            <div class="field-row">
+              <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <select id="patientName" name="patientName">
+                <option value="">Patient Name</option>
+                <option>Henry James</option>
+                <option>Alice Brown</option>
+                <option>Robert Smith</option>
+                <option>Maria Garcia</option>
+              </select>
+            </div>
+            <span class="error-msg">Patient name is required.</span>
+          </div>
+
+          <!-- Doctor -->
+          <div class="form-field" id="fDoctor">
+            <div class="field-row">
+              <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <select id="doctorName" name="doctorName">
+                <option value="">Doctor Name</option>
+                <option>James Marry</option>
+                <option>Dr. Sarah Lee</option>
+                <option>Dr. Kevin Park</option>
+                <option>Dr. Priya Nair</option>
+              </select>
+            </div>
+            <span class="error-msg">Doctor name is required.</span>
+          </div>
+
+          <!-- Hospital -->
+          <div class="form-field" id="fHospital">
+            <div class="field-row">
+              <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <select id="hospitalName" name="hospitalName">
+                <option value="">Hospital Name</option>
+                <option>Salus Center (General Hospital)</option>
+                <option>Ultracare (General Hospital)</option>
+                <option>City Health Clinic</option>
+                <option>Metro Medical Center</option>
+              </select>
+            </div>
+            <span class="error-msg">Hospital name is required.</span>
+          </div>
+
+          <!-- Specialty -->
+          <div class="form-field" id="fSpecialty">
+            <div class="field-row">
+              <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <select id="specialty" name="specialty">
+                <option value="">Specialty</option>
+                <option>Dermatology</option>
+                <option>Cardiology</option>
+                <option>Neurology</option>
+                <option>Orthopedics</option>
+                <option>Pediatrics</option>
+                <option>General Medicine</option>
+              </select>
+            </div>
+            <span class="error-msg">Specialty is required.</span>
+          </div>
+
+          <!-- Date -->
+          <div class="form-field" id="fDate">
+            <div class="field-row">
+              <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <input type="date" id="apptDate" name="apptDate" placeholder="Select Date">
+            </div>
+            <span class="error-msg">Date is required.</span>
+          </div>
+
+          <!-- Time -->
+          <div class="form-field" id="fTime">
+            <div class="field-row">
+              <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <input type="time" id="apptTime" name="apptTime" placeholder="Select Time">
+            </div>
+            <span class="error-msg">Time is required.</span>
+          </div>
+
+          <!-- Reason -->
+          <div class="form-field full" id="fReason">
+            <label for="reason">Reason</label>
+            <textarea id="reason" name="reason" rows="3" placeholder="Enter reason for visit..."></textarea>
+          </div>
+
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="btnCancel">Cancel</button>
+      <button class="btn-save" id="btnSave">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
